@@ -13,6 +13,7 @@ from .RecipeTypes import (Architectures, Extendable, LinesOfText,
                           RequiresList, Status, YesNo)
 from .ShellScriptlets import configFileEvaluatorScript, getShellVariableSetters
 from .Utils import filteredEnvironment, sysExit, warn
+import json
 
 # -- haikuports.conf and *.recipe parser --------------------------------
 
@@ -40,6 +41,19 @@ class ConfigParser(object):
 			output = check_output(['bash', '-c', wrapperScript], env=shellEnv).decode('utf-8')
 		except (OSError, CalledProcessError):
 			sysExit("Can't evaluate config file: " + filename)
+
+#		if 'portVersionedName' in shellVariables:
+#			outFile = open('/boot/data/Tests/PackageBuilder/recipeInfos-hp-wrapper/' + shellVariables.get('portVersionedName') + '.sh', 'w')
+#			outFile.write(wrapperScript)
+#			outFile.close()
+#
+#			outFile = open('/boot/data/Tests/PackageBuilder/recipeInfos-hp-input/' + shellVariables.get('portVersionedName') + '.json', 'w')
+#			outFile.write(json.dumps(shellVariables))
+#			outFile.close()
+#
+#			outFile = open('/boot/data/Tests/PackageBuilder/recipeInfos-hp/' + shellVariables.get('portVersionedName') + '.txt', 'w')
+#			outFile.write(output)
+#			outFile.close()
 
 		# ... and collect the resulting configurations (one per line)
 
