@@ -129,6 +129,9 @@ def parseOptions():
 					  action='store_true', dest='debug', default=False,
 					  help="show Python stack traces for fatal errors")
 
+	basic_flags.add_option('--nounpack',
+					  action='store_false', dest='unpack', default=True,
+					  help="don't unpack the sources, just download")
 	basic_flags.add_option('-n', '--nopatch',
 					  action='store_false', dest='patch', default=True,
 					  help="don't patch the sources, just download and unpack")
@@ -352,6 +355,8 @@ def parseOptions():
 	(__Options__, args) = parser.parse_args()
 
 	# some normalization
+	if not getOption('unpack'):
+		setattr(__Options__, 'patch', False)
 	if (getOption('patchFilesOnly') or not getOption('patch')
 		or getOption('extractPatchset')):
 		setattr(__Options__, 'build', False)
